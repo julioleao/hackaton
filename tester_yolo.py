@@ -1,45 +1,57 @@
-import math
 import cv2
+import numpy as np
 import torch
-from ultralytics import YOLO
 from yolov5.models.common import DetectMultiBackend
-from yolov5.utils.general import non_max_suppression
+from yolov5.utils.general import non_max_suppression, scale_boxes
+from yolov5.utils.augmentations import letterbox
 from yolov5.utils.torch_utils import select_device
-from configs import video_path
+from configs import DEVICE, IMG_SIZE, TRAINED_MODEL_PATH, VIDEO_PATH
 import cvzone
 
-# Carrega o modelo treinado
-model = YOLO('yolov5n.pt')
+device = select_device(DEVICE)
 
+model = DetectMultiBackend(TRAINED_MODEL_PATH, device=device)
+model.warmup(imgsz=(1, 3, IMG_SIZE, IMG_SIZE))
+classNames = model.names
 
-# Carregar vídeo ao vivo
-cap = cv2.VideoCapture(video_path)  # Pode usar 0 para webcam
-classNames = ["knife", "gun"]
-
+cap = cv2.VideoCapture(VIDEO_PATH)
 
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
         break
 
-    results = model(frame, stream=True)
+    img = letterbox(frame, IMG_SIZE, stride=32, auto=True)[0]
+    img = img[:, :, ::-1].transpose(2, 0, 1)
+    img = np.ascontiguousarray(img)
 
-    for r in results:
-        boxes = r.boxes
-        for box in boxes:
-            x1, y1, x2, y2 = box.xyxy[0]
-            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
-            w, h = x2-x1, y2-y1
-            cvzone.cornerRect(frame, (x1, y1, w, h))
+    img = torch.from_numpy(img).to(device)
+    img = img.float() / 255.0
+    img = img.unsqueeze(0)
 
-            conf = math.ceil((box.conf[0]*100))/100
+    with torch.no_grad():
+        pred = model(img)
 
-            cls = box.cls[0]
-            name = classNames[int(cls)]
+    pred = non_max_suppression(pred, conf_thres=0.2, iou_thres=0.2)
 
-            cvzone.putTextRect(frame, f'{name} 'f'{conf}', (max(0,x1), max(35,y1)), scale = 0.5)
+    for det in pred:
+        if len(det):
+            det[:, :4] = scale_boxes(img.shape[2:], det[:, :4], frame.shape).round()
 
+            for *xyxy, conf, cls in det:
+                x1, y1, x2, y2 = map(int, xyxy)
+                w, h = x2 - x1, y2 - y1
 
+                cvzone.cornerRect(frame, (x1, y1, w, h))
+
+                conf = round(float(conf), 2)
+
+                cls = int(cls)
+                name = classNames[cls] if cls < len(classNames) else f"Class {cls}"
+
+                cvzone.putTextRect(
+                    frame, f"{name} ", (max(0, x1), max(35, y1)), scale=1.5
+                )
 
     cv2.imshow("Image", frame)
     if cv2.waitKey(1) & 0xFF == ord("q"):

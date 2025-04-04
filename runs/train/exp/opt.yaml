@@ -1,6 +1,6 @@
-weights: yolov5n.pt
+weights: yolov5l.pt
 cfg: ''
-data: E:\Dev\hackaton\dataset\guns-knives-yolo\data.yaml
+data: C:\Users\Julio\Dev\hackaton\dataset\knives-yolo\data.yaml
 hyp:
   lr0: 0.01
   lrf: 0.01
@@ -30,7 +30,7 @@ hyp:
   mosaic: 1.0
   mixup: 0.0
   copy_paste: 0.0
-epochs: 3
+epochs: 4
 batch_size: 4
 imgsz: 640
 rect: false
@@ -43,7 +43,7 @@ evolve: null
 bucket: ''
 cache: false
 image_weights: false
-device: cpu
+device: 0
 multi_scale: false
 single_cls: false
 optimizer: SGD
@@ -51,7 +51,7 @@ sync_bn: false
 workers: 8
 project: runs/train
 name: exp
-exist_ok: false
+exist_ok: true
 quad: false
 cos_lr: false
 label_smoothing: 0.0

@@ -1,18 +1,34 @@
-from yolov5 import train, val, detect, export
-import os
+import yaml
+from yolov5 import train
 
-import torch
+
+from configs import DATA_PATH, DEVICE, IMG_SIZE, TRAIN_PATH, VAL_PATH
+
+
+def create_data_yaml():
+    data = {
+        "train": TRAIN_PATH,
+        "val": VAL_PATH,
+        "nc": 1,
+        "names": ["sharp object"],
+    }
+
+    # Criando o arquivo data.yaml
+    with open(DATA_PATH, "w") as file:
+        yaml.dump(data, file, default_flow_style=False)
+
 
 if __name__ == "__main__":
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    data_path = os.path.join(base_dir, "dataset", "guns-knives-yolo", "data.yaml")
-
+    create_data_yaml()
     train.run(
-        imgsz=640,
-        data=data_path,
-        epochs=3,
+        imgsz=IMG_SIZE,
+        data=DATA_PATH,
+        epochs=4,
         batch_size=4,
-        weights="yolov5n.pt",
+        weights="yolov5l.pt",
         cache=False,
-        device=0 if torch.cuda.is_available() else "cpu",
+        device=DEVICE,
+        project="runs/train",
+        name="exp",
+        exist_ok=True,
     )

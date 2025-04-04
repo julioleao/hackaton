@@ -4,12 +4,13 @@ import torch
 
 
 VIDEO_FILE = "video1.mp4"
-DATASET_PATH = "datasets"
 OUTPUT_VIDEO_FILE = f"output_{VIDEO_FILE}"
-IMAGE_TRAINER_FOLDER = os.path.join(os.path.abspath(os.getcwd()), DATASET_PATH)
-video_path = os.path.join("videos", VIDEO_FILE)
-confidence_threshold = 0.7
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-img_size = 128
-batch_size = 1
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+VIDEO_PATH = os.path.join("videos", VIDEO_FILE)
+KNIVES_YOLO_PATH = os.path.join(BASE_DIR, "dataset", "knives-yolo")
+DATA_PATH = os.path.join(KNIVES_YOLO_PATH, "data.yaml")
+TRAIN_PATH = os.path.join(KNIVES_YOLO_PATH, "train", "images")
+VAL_PATH = os.path.join(KNIVES_YOLO_PATH, "valid", "images")
+TRAINED_MODEL_PATH = os.path.join(BASE_DIR, "runs", "train", "exp", "weights", "best.pt")
+IMG_SIZE = 640
+DEVICE = 0 if torch.cuda.is_available() else "cpu"

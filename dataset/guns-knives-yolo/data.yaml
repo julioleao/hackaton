@@ -1,5 +1,0 @@
-train: E:/Dev/hackaton/dataset/guns-knives-yolo/train/images
-val:  E:/Dev/hackaton/dataset/guns-knives-yolo/valid/images
-
-nc: 2
-names: ["knife", "pistol"]
