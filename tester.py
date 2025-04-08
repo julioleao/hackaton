@@ -5,7 +5,7 @@ from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import non_max_suppression, scale_boxes
 from yolov5.utils.augmentations import letterbox
 from yolov5.utils.torch_utils import select_device
-from configs import DEVICE, IMG_SIZE, TRAINED_MODEL_PATH, VIDEO_PATH
+from configs import DEVICE, IMG_SIZE, STREAMING, TRAINED_MODEL_PATH, VIDEO_PATH
 import cvzone
 
 device = select_device(DEVICE)
@@ -15,6 +15,11 @@ model.warmup(imgsz=(1, 3, IMG_SIZE, IMG_SIZE))
 classNames = model.names
 
 cap = cv2.VideoCapture(VIDEO_PATH)
+
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+out = cv2.VideoWriter("output.mp4", fourcc, 30.0, (frame_width, frame_height))
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -50,12 +55,15 @@ while cap.isOpened():
                 name = classNames[cls] if cls < len(classNames) else f"Class {cls}"
 
                 cvzone.putTextRect(
-                    frame, f"{name} ", (max(0, x1), max(35, y1)), scale=1.5
+                    frame, f"{name} {conf}", (max(0, x1), max(35, y1)), scale=1.5
                 )
 
-    cv2.imshow("Image", frame)
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
+    if STREAMING:
+        cv2.imshow("Image", frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+    out.write(frame)
 
 cap.release()
+out.release()
 cv2.destroyAllWindows()

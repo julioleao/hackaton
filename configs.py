@@ -14,3 +14,4 @@ VAL_PATH = os.path.join(KNIVES_YOLO_PATH, "valid", "images")
 TRAINED_MODEL_PATH = os.path.join(BASE_DIR, "runs", "train", "exp", "weights", "best.pt")
 IMG_SIZE = 640
 DEVICE = 0 if torch.cuda.is_available() else "cpu"
+STREAMING = True
