@@ -1,5 +1,5 @@
 names:
-- sharp object
+- knife
 nc: 1
-train: C:\Users\Julio\Dev\hackaton\dataset\knives-yolo\train\images
-val: C:\Users\Julio\Dev\hackaton\dataset\knives-yolo\valid\images
+train: C:\Users\Julio\Dev\hackaton\dataset\knives-lite\train\images
+val: C:\Users\Julio\Dev\hackaton\dataset\knives-lite\valid\images

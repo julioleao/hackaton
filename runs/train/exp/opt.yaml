@@ -1,6 +1,6 @@
 weights: yolov5l.pt
 cfg: ''
-data: C:\Users\Julio\Dev\hackaton\dataset\knives-yolo\data.yaml
+data: C:\Users\Julio\Dev\hackaton\dataset\knives-lite\data.yaml
 hyp:
   lr0: 0.01
   lrf: 0.01

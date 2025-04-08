@@ -2,7 +2,7 @@ import os
 
 import torch
 
-DATASET_TYPE = "knives-full"
+DATASET_TYPE = "knives-lite"
 VIDEO_FILE = "video1.mp4"
 OUTPUT_VIDEO_FILE = f"output_{VIDEO_FILE}"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

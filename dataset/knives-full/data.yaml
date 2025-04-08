@@ -1,5 +1,5 @@
 names:
 - knife
 nc: 1
-train: E:\Dev\hackaton\dataset\knives-full\train\images
-val: E:\Dev\hackaton\dataset\knives-full\valid\images
+train: C:\Users\Julio\Dev\hackaton\dataset\knives-full\train\images
+val: C:\Users\Julio\Dev\hackaton\dataset\knives-full\valid\images

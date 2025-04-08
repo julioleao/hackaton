@@ -37,7 +37,7 @@ while cap.isOpened():
     with torch.no_grad():
         pred = model(img)
 
-    pred = non_max_suppression(pred, conf_thres=0.2, iou_thres=0.2)
+    pred = non_max_suppression(pred, conf_thres=0.35, iou_thres=0.4)
 
     for det in pred:
         if len(det):
