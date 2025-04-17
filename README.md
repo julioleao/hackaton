@@ -7,6 +7,11 @@ Este projeto realiza **detecção de objetos cortantes em vídeos** utilizando *
 - Julio Cesario de Paiva Leão (julio0023@live.com)
 - Luis Gustavo Bueno Colombo (luisgustavobuenocolombo@gmail.com)
 
+## URLs do projeto
+
+- [Vídeo do YouTube]()
+- [Repositório do GitHub](https://github.com/julioleao/hackaton)
+
 ## 🎯 Proposta
 
 ✅ Detectar objetos cortantes (como facas e tesouras) em vídeos utilizando visão computacional.
