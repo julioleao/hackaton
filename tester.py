@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import torch
@@ -11,14 +12,18 @@ from configs import DEVICE, IMG_SIZE, STREAMING, TRAINED_MODEL_PATH, VIDEO_PATH
 import cvzone
 
 knife_counter = 0
-pending_knives = []      
-confirmed_knives = []    
-DIST_THRESHOLD = 10 
-CONFIRM_FRAMES = 4       
+pending_knives = []
+confirmed_knives = []
+DIST_THRESHOLD = 10
+CONFIRM_FRAMES = 4
 
 
 def send_notification(message):
-    subprocess.run(["notify-send", message])
+    systemOS = os.name
+    if systemOS == "nt":
+        subprocess.run(["powershell", "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show('{}')".format(message)])
+    else:
+        subprocess.run(["notify-send", message])
 
 def setup_model():
     device = select_device(DEVICE)
