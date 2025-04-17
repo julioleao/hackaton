@@ -2,6 +2,11 @@
 
 Este projeto realiza **detecção de objetos cortantes em vídeos** utilizando **YOLOv5**, com possibilidade de treinar um modelo personalizado e testar em arquivos `.mp4` e emitir alertas automáticos quando objetos suspeitos forem confirmados por múltiplos frames.
 
+## Grupo 2
+
+- Julio Cesario de Paiva Leão (julio0023@live.com)
+- Luis Gustavo Bueno Colombo (luisgustavobuenocolombo@gmail.com)
+
 ## 🎯 Proposta
 
 ✅ Detectar objetos cortantes (como facas e tesouras) em vídeos utilizando visão computacional.
