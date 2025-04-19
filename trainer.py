@@ -13,7 +13,6 @@ def create_data_yaml():
         "names": ["knife"],
     }
 
-    # Criando o arquivo data.yaml
     with open(DATA_PATH, "w") as file:
         yaml.dump(data, file, default_flow_style=False)
 

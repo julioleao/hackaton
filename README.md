@@ -1,13 +1,28 @@
 # 🔪 HACKATON FIAP - IA para Devs
 
-Este projeto realiza **detecção de objetos cortantes em vídeos** utilizando **YOLOv5**, com possibilidade de treinar um modelo personalizado e testar em arquivos `.mp4`.
+Este projeto realiza **detecção de objetos cortantes em vídeos** utilizando **YOLOv5**, com possibilidade de treinar um modelo personalizado e testar em arquivos `.mp4` e emitir alertas automáticos quando objetos suspeitos forem confirmados por múltiplos frames.
+
+## Grupo 2
+
+- Julio Cesario de Paiva Leão (julio0023@live.com)
+- Luis Gustavo Bueno Colombo (luisgustavobuenocolombo@gmail.com)
+
+## URLs do projeto
+
+- [Vídeo do YouTube](https://www.youtube.com/watch?v=W33Nbd2gj4E)
+- [Repositório do GitHub](https://github.com/julioleao/hackaton)
 
 ## 🎯 Proposta
 
-- [ ] Buscar ou construir um dataset contendo imagens de facas, tesouras e outros objetos cortantes, capturados em diferentes ângulos e condições de iluminação.
-- [ ] Anotar o dataset para treinar um modelo supervisionado, incluindo imagens negativas (sem objetos perigosos) para reduzir falsos positivos.
-- [ ] Treinar o modelo com YOLOv5.
-- [ ] Desenvolver um sistema de alertas (por exemplo, envio de e-mail em caso de detecção).
+✅ Detectar objetos cortantes (como facas e tesouras) em vídeos utilizando visão computacional.
+
+✅ Implementar um sistema inteligente de confirmação baseado em múltiplos frames.
+
+✅ Enviar alertas automáticos quando um objeto for confirmado em cena.
+
+✅ Permitir treino de um modelo YOLOv5 com dataset personalizado.
+
+✅ Executar testes com vídeos locais, exibindo ou salvando os resultados.
 
 ---
 
@@ -76,6 +91,19 @@ python tester.py
 - O vídeo de saída será salvo como `output.mp4` por padrão.
 - Para visualização em tempo real, `STREAMING = True` em `configs.py`.
 
+#### Funcionalidades
+
+- A cada frame, a detecção é realizada usando YOLOv5.
+- Se um objeto é identificado por pelo menos 4 frames consecutivos na mesma região, é confirmado.
+- Ao confirmar um novo objeto cortante, uma notificação automática é enviada:
+  - Windows: via PowerShell (MessageBox)
+  - Linux: via notify-send
+
+#### Parâmetros importantes
+
+- `DIST_THRESHOLD`: distância máxima entre detecções para considerá-las do mesmo objeto.
+- `CONFIRM_FRAMES`: número mínimo de frames consecutivos para confirmar o objeto.
+
 ---
 
 ## 📝 Explicação dos Arquivos
@@ -95,4 +123,5 @@ python tester.py
 
 - A estrutura do dataset deve seguir o padrão YOLOv5 (pastas `train/images`, `valid/images`, etc.).
 - O código utiliza diretamente os módulos do repositório oficial do YOLOv5.
-- Certifique-se de ter o repositório do YOLOv5 clonado ou instalado corretamente como dependência.
+- Alertas são enviados apenas quando um objeto é `confirmado` (não basta aparecer em apenas 1 frame).
+- A detecção usa limiares de confiança e IoU configuráveis no `tester.py`.
