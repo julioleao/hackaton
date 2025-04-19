@@ -9,7 +9,7 @@ Este projeto realiza **detecção de objetos cortantes em vídeos** utilizando *
 
 ## URLs do projeto
 
-- [Vídeo do YouTube]()
+- [Vídeo do YouTube](https://www.youtube.com/watch?v=W33Nbd2gj4E)
 - [Repositório do GitHub](https://github.com/julioleao/hackaton)
 
 ## 🎯 Proposta
